@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include <fstream>
+#include <unistd.h>
 using namespace std;
 
 vector<pair<string, int>> months = {
@@ -22,42 +23,86 @@ vector<pair<string, int>> months = {
 
 int main(int argc, char** argv)
 {
+  int op;
+  int begin_month = -1;
+  int begin_day = -1;
+  int end_month = -1;
+  int end_day = -1;
+  string date;
+  while((op = getopt(argc, argv, "b:e:")) != -1)
+  {
+    switch(op) {
+      case 'b':
+        date = optarg;
+        if(date.length() != 4)
+        {
+          cerr << "Length of begin date invalid, use mmdd format." << endl;
+          return 1;
+        }
+        else
+        {
+          begin_month = stoi(date.substr(0, 2));
+          if(begin_month < 1 || begin_month > 12)
+          {
+            cerr << "Begin date month must be between 1 (JAN) and 12 (DEC)." << endl;
+            return 1;
+          }
+          begin_day = stoi(date.substr(2, 2));
+          if(begin_day < 1 || begin_day > months.at(begin_month - 1).second)
+          {
+            cerr << "Begin date day must be between 1 and the amount of days in the month." << endl;
+            return 1;
+          }
+        }
+        
+        break;
+      case 'e':
+        date = optarg;
+        if(date.length() != 4)
+        {
+          cerr << "Length of end date invalid, use mmdd format." << endl;
+          return 1;
+        }
+        else
+        {
+          end_month = stoi(date.substr(0, 2));
+          if(end_month < 1 || end_month > 12)
+          {
+            cerr << "End date month must be between 1 (JAN) and 12 (DEC)." << endl;
+            return 1;
+          }
+          end_day = stoi(date.substr(2, 2));
+          if(end_day < 1 || end_day > months.at(end_month - 1).second)
+          {
+            cerr << "End date day must be between 1 and the amount of days in the month." << endl;
+            return 1;
+          }
+        }
+        if(begin_month == end_month && begin_day == end_day)
+        {
+          cerr << "Begin date can't be the same as end date." << endl;
+          return 1;
+        }
+
+        break;
+    }
+  }
 
   string output = "";
 
-  /*bool setBegin = false;
-  bool setEnd = false;
-  int beginMonth = 0;
-  int beginDay = 0;
-  int endMonth = 0;
-  int endDay = 0;
-  for(int args = 0; args < argc; args++)
-  {
-
-  }*/
-
-  /*int newline = 0; //actual one, below one is for my use
+  begin_month --;
+  end_month --;
+  int newline = 0;
   for(auto i : months)
   {
     for(int j = 1; j <= i.second; ++j)
     {
-      cout << i.first << " " << j << "\t\t\t\t\t\t";
-      if(newline == 3) cout << "\n\n\n\n\n";
-      newline = (++newline % 4);
-    }
-  }*/
-
-
-  int newline = 0;
-  for(int i = 1; i <= 3; i++)
-  {
-    for(int j = 1; j < months.at(i).second; ++j)
-    {
-      output += months.at(i).first + " " + to_string(j) + "\t\t\t\t\t\t";
+      output += i.first + " " + to_string(j) + "\t\t\t\t\t\t";
       if(newline == 3) output += "\n\n\n\n\n";
       newline = (++newline % 4);
     }
   }
+
   ofstream output_file;
   output_file.open("cailcal.txt");
   output_file << output;

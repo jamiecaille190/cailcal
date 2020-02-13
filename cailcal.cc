@@ -8,7 +8,7 @@ using namespace std;
 
 vector<pair<string, int>> months = {
   make_pair<string,int>("JAN", 31),
-  make_pair<string,int>("FEB", 29),
+  make_pair<string,int>("FEB", 28),
   make_pair<string,int>("MAR", 31),
   make_pair<string,int>("APR", 30),
   make_pair<string,int>("MAY", 31),
@@ -24,10 +24,10 @@ vector<pair<string, int>> months = {
 int main(int argc, char** argv)
 {
   int op;
-  int begin_month = -1;
-  int begin_day = -1;
-  int end_month = -1;
-  int end_day = -1;
+  int begin_month = 1;
+  int begin_day = 1;
+  int end_month = 12;
+  int end_day = 31;
   string date;
   while((op = getopt(argc, argv, "b:e:")) != -1)
   {
@@ -89,18 +89,37 @@ int main(int argc, char** argv)
   }
 
   string output = "";
-
   begin_month --;
   end_month --;
   int newline = 0;
-  for(auto i : months)
+  int day_counter = begin_day;
+  int month_counter = begin_month;
+
+  int last_day = months.at(begin_month).second;
+  string month_cur = months.at(begin_month).first;
+  
+  while(true)
   {
-    for(int j = 1; j <= i.second; ++j)
+    while(day_counter <= last_day)
     {
-      output += i.first + " " + to_string(j) + "\t\t\t\t\t\t";
-      if(newline == 3) output += "\n\n\n\n\n";
-      newline = (++newline % 4);
+      output += month_cur + " " + to_string(day_counter) + "\t\t\t\t\t\t";
+      newline++;
+      if(newline == 4)
+      {
+        output += "\n\n\n\n\n\n";
+        newline = 0;
+      }
+      day_counter++;
     }
+    if(month_counter == end_month && day_counter == end_day + 1) break;
+    day_counter = 1;
+    month_counter ++;
+    if(month_counter > 11) month_counter = 0;
+    
+    last_day = months.at(month_counter).second;
+    if(month_counter == end_month) last_day = end_day;
+
+    month_cur = months.at(month_counter).first;
   }
 
   ofstream output_file;

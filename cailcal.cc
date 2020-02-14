@@ -123,7 +123,7 @@ int main(int argc, char** argv)
   }
 
   ofstream output_file;
-  output_file.open("cailcal.txt");
+  output_file.open("cal.txt");
   output_file << output;
   output_file.close();
   

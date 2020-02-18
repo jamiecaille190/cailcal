@@ -4,6 +4,9 @@ todo:
 
 clean up code
 
+make default dates per row 7 for weeks
+get feb29 support
+make first row and last row end on proper days of the week (sunday = 1, ...)
 csv support
 tab spacing and enter amounts and shit
 add current date as default date, current date - 1 day as default end
@@ -11,3 +14,4 @@ add dates to add shit to
 add export option but like u gotta make a binary format then loooool but add thru command line utlities
 
 web appify
+

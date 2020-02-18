@@ -6,8 +6,6 @@
 
 using namespace std;
 
-int resolve_flags(int argc, char** argv); //TODO: move into .h file
-
 int main(int argc, char** argv)
 {
 

@@ -2,9 +2,6 @@ lol
 
 todo:
 
-clean up code
-
-make default dates per row 7 for weeks
 get feb29 support
 make first row and last row end on proper days of the week (sunday = 1, ...)
 csv support

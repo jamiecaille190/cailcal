@@ -46,7 +46,7 @@ int main(int argc, char** argv)
   }
 
   ofstream output_file;
-  output_file.open(file_name);
+  output_file.open(file_name.txt);
   output_file << output;
   output_file.close();
   

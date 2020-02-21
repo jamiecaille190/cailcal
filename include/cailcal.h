@@ -4,6 +4,8 @@
 
 using namespace std;
 
+int resolve_flags(int, char**);
+
 vector<pair<string, int>> months = {
   make_pair<string,int>("JAN", 31),
   make_pair<string,int>("FEB", 28),
@@ -23,6 +25,6 @@ int begin_month = 1;
 int begin_day = 1;
 int end_month = 12;
 int end_day = 31;
-string file_name = "cal.txt";
+string file_name = "cal";
 string tab_string = "\t";
 string enter_string = "\n";

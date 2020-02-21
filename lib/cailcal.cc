@@ -9,7 +9,7 @@ using namespace std;
 int main(int argc, char** argv)
 {
 
-  if(resolve_flags(argc, argv) == 1) return 1; //TODO: fix later to do exceptions
+  if(resolve_flags(argc, argv) == 1) return 1;
 
   string output = "";
   begin_month --;
@@ -25,11 +25,11 @@ int main(int argc, char** argv)
   {
     while(day_counter <= last_day)
     {
-      output += month_cur + " " + to_string(day_counter) + "\t\t\t\t\t\t";
+      output += month_cur + " " + to_string(day_counter) + "\t\t\t\t";
       newline++;
-      if(newline == 4)
+      if(newline == 7)
       {
-        output += "\n\n\n\n\n\n";
+        output += "\n\n\n\n\n";
         newline = 0;
       }
       day_counter++;
@@ -46,7 +46,7 @@ int main(int argc, char** argv)
   }
 
   ofstream output_file;
-  output_file.open(file_name + ".txt");
+  output_file.open(file_name);
   output_file << output;
   output_file.close();
   
@@ -57,7 +57,7 @@ int resolve_flags(int argc, char** argv)
 {
   int op;
   string date;
-  while((op = getopt(argc, argv, "b:e:t:x:y:")) != -1)
+  while((op = getopt(argc, argv, "b:e:t:")) != -1)
   {
     switch(op) {
       case 'b':
@@ -82,7 +82,6 @@ int resolve_flags(int argc, char** argv)
             return 1;
           }
         }
-        
         break;
       case 'e': 
         date = optarg;
@@ -111,7 +110,6 @@ int resolve_flags(int argc, char** argv)
           cerr << "Begin date can't be the same as end date." << endl;
           return 1;
         }
-
         break; 
       case 't':
         file_name = optarg;
